@@ -1,35 +1,69 @@
 import os
 
-def removeFiles(filen):
-    DNotDis = open(filen)
-    l = (DNotDis.read())
-    var = (l.split('\n'))
-    DNotDis.close()
-    return var
+def extractfile(file):
+    f=open(file)
+    print('exercise08 file is open ')
+    a=f.read()
+    donotchange=(a.split('\n'))
+    print('Data is split from file')
+    f.close()
+    return donotchange
 
-def army(pathn, filen, ext):
-    filen=filen
-    pathn=pathn
-    os.chdir(pathn)
-    count = 0
-    var = removeFiles(filen)
+def soilder (path, file ,extension):
+    path=path
+    print(path)
+    file=file #because file is present in pycharm directory
+    extrated = extractfile(file)
+    extrated =str(extrated)
+    print(extrated)
+    print(type(extrated))
+    print(os.getcwd())
+    q=os.chdir(path)
+
+    print(os.getcwd())
+
+    print('path is change to ', os.getcwd())
+
+    count=0
     for f in os.listdir():
-         f_name, f_ext = os.path.splitext(f)
-         if f_ext == f'.{ext}':
-             newName = f'{str(count)}{f_ext}'
-             count += 1
-             os.rename(f,newName)
-             pass
-         if f_name not in var:
-             tn = f_name.title()
-             new_name = f'{tn}{f_ext}'
-         else:
-             new_name = f'{f_name}{f_ext}'
-         os.rename(f,new_name)
+        print("@@@",f,"@@@")
+        filename,fileextension = os.path.splitext(f)
+        if fileextension == extension :
+            new_file_name= f"{str(count)}{extension}"
+            print(new_file_name)
+            os.rename(f,new_file_name)
+            count+=1
+
+    for f in os.listdir():
+        filename, fileextension = os.path.splitext(f)
+        print(filename)
+        print(type(filename))
+
+        if filename is not extrated :
+            nf=filename.title()
+            newfilename=f"{nf}{fileextension}"
+            print(" --------")
+            print( newfilename )
+
+        else:
+            newfilename=f"{filename}{fileextension}"
+            print(' ========')
+            print(newfilename )
+            print('=======')
+
+        os.rename(f,newfilename)
+
+
 
 if __name__ == '__main__':
+    try:
+        print("enter directory path")
+        path=input()
+        print("enter file name which include file names which u not want to change")
+        file=input()
+        print("enter extension which u want to arrange serially")
+        extension=input()
 
-    pathn=input('Enter Path Name:')
-    filen=input('Enter File Name Which Contain Name Of Files Not TO Alter: ')
-    ext=input('Enter Extension/Formate: ')
-    army(pathn,filen,ext)
+        soilder(path,file,extension)
+    except Exception as e:
+        print(e)
